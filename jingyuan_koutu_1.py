@@ -37,12 +37,13 @@ def find_cnts(path):
             # bin = cv2.dilate(bin, np.ones((5, 5), dtype=np.int8))
             # bin = cv2.erode(bin, np.ones((5, 5), dtype=np.int8))
             # cv2.imshow('bing2', bin)
-            cnts, h = cv2.findContours(bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+           
             # cnts, h = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-            box_list = []
-            obj_dict = {}
+#             box_list = []
+#             obj_dict = {}
             i = 1
+            cnts, h = cv2.findContours(bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             for cnt in cnts:
                 rect = cv2.minAreaRect(cnt)  # 根据cnt获取最小最小框 (中心(x,y), (宽,高), 旋转角度)
                 if rect[1][0] * rect[1][1] > 52000 and rect[1][0] * rect[1][1] < 60000:
@@ -55,17 +56,15 @@ def find_cnts(path):
                     y0 = np.max(box[:, 1])
                     x1 = np.max(box[:, 0])
                     y1 = np.min(box[:, 1])
-                    h_ori = int(rect[1][1])
-                    w_ori = int(rect[1][0])
-                    # print(x0)
-                    # print(y0)
-                    h_roi = int(rect[1][0])
-                    w_roi = int(rect[1][1])
+#                     h_ori = int(rect[1][1])
+#                     w_ori = int(rect[1][0])
+#                   h_roi = int(rect[1][0])
+#                     w_roi = int(rect[1][1])
 
                     # obj = ([x0, y0], [x1, y1], rect[1])
                     # obj_list.append(obj)
-                    obj = (box, h_ori, w_ori, h_roi, w_roi)
-                    box_list.append(obj)
+#                     obj = (box, h_ori, w_ori, h_roi, w_roi)
+#                     box_list.append(obj)
                     # for i in range(len(box_list)):
                     #     obj_dict[i] = {'box': box_list[i][0], 'h_ori': box_list[i][1], 'w_ori': box_list[i][2],
                     #                    'h_roi': box_list[i][3], 'w_roi': box_list[i][4]}
@@ -80,13 +79,13 @@ def find_cnts(path):
                     cv2.imshow('i', roi)
                     cv2.waitKey()
                     cv2.destroyAllWindows()
-                    # if roi.any() == True:
-                    #     new_folder = './' + 'koutu'
-                    #     if not os.path.exists(new_folder):
-                    #         os.mkdir(new_folder)
-                    #     # print(new_folder+os.sep+'x')
-                    #     i = i + 1
-                    #     cv2.imwrite(new_folder + os.sep + str(i) + '.png', roi)
+                    if roi.any() == True:
+                        new_folder = './' + 'koutu'
+                        if not os.path.exists(new_folder):
+                            os.mkdir(new_folder)
+                        # print(new_folder+os.sep+'x')
+                        i = i + 1
+                        cv2.imwrite(new_folder + os.sep + str(i) + '.png', roi)
 
 
 path = '/users/pengzhang/desktop/snap2'
